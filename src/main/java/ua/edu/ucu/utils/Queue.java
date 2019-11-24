@@ -20,5 +20,8 @@ public class Queue {
     public void enqueue(Object e) {
         list = list.addLast(e);
     }
+    public int size(){
+        return list.size();
+    }
 
 }

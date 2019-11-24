@@ -3,6 +3,8 @@ package ua.edu.ucu.tries;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class RWayTrieTest {
     @Test
     public void testSize(){
@@ -46,10 +48,10 @@ public class RWayTrieTest {
         RWayTrie trie = new RWayTrie();
 
         trie.add(new Tuple(("hello"), "hello".length()));
-        trie.add(new Tuple(("hi"), "hi".length()));
-        Assert.assertTrue(trie.delete("hello"));
-        Assert.assertTrue(trie.contains("hi"));
-
+        trie.add(new Tuple(("hell"), "hell".length()));
+        Assert.assertTrue(trie.delete("hell"));
+        Assert.assertTrue(trie.contains("hello"));
+        ArrayList<String> w = (ArrayList<String>) trie.words();
     }
     @Test
     public void testWords(){
@@ -59,7 +61,8 @@ public class RWayTrieTest {
         trie.add(new Tuple(("hi"), "hi".length()));
         trie.add(new Tuple(("hit"), "hit".length()));
         trie.add(new Tuple(("tail"), "tail".length()));
-        trie.add(new Tuple(("hitler"), "hitler".length()));
+        trie.add(new Tuple(("Hitler"), "Hitler".length()));
+        trie.words();
     }
     @Test
     public void testPrefixWords(){

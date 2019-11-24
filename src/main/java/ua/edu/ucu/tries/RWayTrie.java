@@ -1,6 +1,8 @@
 package ua.edu.ucu.tries;
 
 
+import ua.edu.ucu.utils.Queue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +70,7 @@ public class RWayTrie implements Trie {
                 i++;
                 boolean fl = nodes[word.charAt(i)].containsOneWord();
             }
-            nodes[i] = null;
+            nodes[word.charAt(i)] = null;
             wordsAmount -= 1;
             return true;
         } else {
@@ -78,16 +80,50 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> words() {
-        ArrayList<String> words = new ArrayList<>();
+        Queue queue = new Queue();
         TrieNode[] nodes = root.getNext();
+        ArrayList<String> result = new ArrayList<String>();
         for (int i = 0; i < nodes.length; i++) {
             if (nodes[i] != null) {
-                int finalI = i;
-                List<String> wordsNode = nodes[i].getSuffixes().stream().map(word -> (char) finalI + word).collect(Collectors.toList());
-                words.addAll(wordsNode);
+                queue.enqueue(i);
             }
         }
-        return words.stream().map(word -> word.replace("\n", "")).collect(Collectors.toList());
+        while (queue.size() != 0) {
+            String stringCurrentIndex = "";
+            Object currentIndex = queue.dequeue();
+            if (currentIndex instanceof String) {
+                stringCurrentIndex = (String) currentIndex;
+                currentIndex = (stringCurrentIndex).charAt((stringCurrentIndex).length() - 1);
+                TrieNode[] rootNodes = root.getNext();
+                nodes = rootNodes;
+                for (int i = 0; i < stringCurrentIndex.length() - 1; i++) {
+                    nodes = nodes[stringCurrentIndex.charAt(i)].getNext();
+                }
+                currentIndex = (int) ((Character) currentIndex).charValue();
+            }
+            TrieNode[] currentNodes = null;
+            int index = ((Integer) currentIndex).intValue();
+            if (nodes[index] != null) {
+                currentNodes = nodes[index].getNext();
+            } else {
+                result.add(stringCurrentIndex);
+                continue;
+            }
+            for (int i = 0; i < currentNodes.length; i++) {
+                if (currentNodes[i] != null) {
+                    if (stringCurrentIndex == "") {
+                        queue.enqueue((String.valueOf((char) index) + (String.valueOf((char) i))));
+                    } else {
+                        queue.enqueue(stringCurrentIndex + (String.valueOf((char) i)));
+                        if (i == 10) {
+                            result.add(stringCurrentIndex);
+                        }
+                    }
+                }
+            }
+
+        }
+        return result;
     }
 
 
@@ -106,7 +142,7 @@ public class RWayTrie implements Trie {
 }
 
 class TrieNode {
-    private final static int R = 256;
+    private final static int R = 123;
     private TrieNode[] next = new TrieNode[R];
 
     private boolean value;

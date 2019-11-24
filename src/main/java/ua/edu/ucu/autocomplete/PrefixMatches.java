@@ -1,40 +1,67 @@
 package ua.edu.ucu.autocomplete;
 
 import ua.edu.ucu.tries.Trie;
+import ua.edu.ucu.tries.Tuple;
 
-/**
- *
- * @author andrii
- */
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.groupingBy;
+
+
 public class PrefixMatches {
 
-    private Trie trie;
+    private Trie dictTrie;
 
     public PrefixMatches(Trie trie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        dictTrie = trie;
     }
 
     public int load(String... strings) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        int added = 0;
+        for (String string : strings) {
+            String[] wordsTokens = string.split(" ");
+            List<String> cleanedWords = Arrays.stream(wordsTokens).filter(s -> s.length() > 2)
+                    .map(String::toLowerCase).collect(Collectors.toList());
+            added += cleanedWords.size();
+            for (String term : cleanedWords) {
+                dictTrie.add(new Tuple(term, term.length()));
+            }
+        }
+        return added;
     }
 
     public boolean contains(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dictTrie.contains(word);
     }
 
     public boolean delete(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dictTrie.delete(word);
     }
 
     public Iterable<String> wordsWithPrefix(String pref) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        return dictTrie.wordsWithPrefix(pref);
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        ArrayList<String> wordPref = (ArrayList<String>) dictTrie.wordsWithPrefix(pref);
+        Map<Integer, List<String>> map = wordPref.stream().collect(groupingBy(String::length));
+        ArrayList<String> result = new ArrayList<String>();
+        Set<Integer> keys = map.keySet();
+        int currentK = 0;
+        for (int i = 0; i < keys.size(); i++) {
+            List<String> neededWords = map.get(i);
+            result.addAll(neededWords);
+            k++;
+            if(currentK ==k){
+                break;
+            }
+        }
+        return result;
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dictTrie.size();
     }
 }
