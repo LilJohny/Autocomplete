@@ -1,7 +1,6 @@
 package ua.edu.ucu.tries;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 public class TrieIterator implements Iterable<String> {
