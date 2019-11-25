@@ -92,7 +92,7 @@ public class RWayTrie implements Trie {
             Object currentIndex = queue.dequeue();
             if (currentIndex instanceof String) {
                 stringCurrentIndex = (String) currentIndex;
-                currentIndex = (stringCurrentIndex).charAt((stringCurrentIndex).length() - 1);
+                currentIndex = stringCurrentIndex.charAt(stringCurrentIndex.length() - 1);
                 TrieNode[] rootNodes = root.getNext();
                 nodes = rootNodes;
                 for (int i = 0; i < stringCurrentIndex.length() - 1; i++) {
