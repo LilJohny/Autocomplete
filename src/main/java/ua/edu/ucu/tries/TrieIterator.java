@@ -16,9 +16,4 @@ public class TrieIterator implements Iterable<String> {
         return container.listIterator();
     }
 
-    public ArrayList<String> getContainer() {
-        ArrayList<String> copyContainer = new ArrayList<>();
-        Collections.copy(copyContainer, container);
-        return copyContainer;
-    }
 }

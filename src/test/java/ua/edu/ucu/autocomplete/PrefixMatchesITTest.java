@@ -43,5 +43,17 @@ public class PrefixMatchesITTest {
 
         assertThat(result, containsInAnyOrder(expResult));
     }
+    @Test
+    public void testSize(){
+        assertEquals(pm.size(),5);
+        pm.delete("abc");
+        assertEquals(pm.size(),4);
+    }
+    @Test
+    public void testDelete(){
+        assertEquals(pm.size(),5);
+        pm.delete("abc");
+        assertFalse(pm.contains("abc"));
+    }
 
 }
