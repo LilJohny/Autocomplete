@@ -130,7 +130,7 @@ public class RWayTrie implements Trie {
     public Iterable<String> wordsWithPrefix(String s) {
         Iterable<String> wordsIterator = words();
         String[] prefixWords = StreamSupport.stream(wordsIterator.spliterator(), false).filter(word -> word.startsWith(s)).toArray(String[]::new);
-        return Arrays.asList(prefixWords);
+        return (Iterable<String>) Arrays.asList(prefixWords);
     }
 
     @Override
