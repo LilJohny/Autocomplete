@@ -28,14 +28,16 @@ public final  class TrieNode {
     }
 
     public boolean hasNext() {
-        Object[] filteredNodes = Arrays.stream(getNext()).filter(Objects::nonNull).toArray();
+        Object[] filteredNodes = Arrays.stream(getNext())
+                .filter(Objects::nonNull).toArray();
         return filteredNodes.length != 0;
     }
 
     public boolean containsOneWord() {
         TrieNode node = this;
         while (node.hasNext()) {
-            Object[] filteredNodes = Arrays.stream(node.getNext()).filter(Objects::nonNull).toArray();
+            Object[] filteredNodes = Arrays.stream(node.getNext())
+                    .filter(Objects::nonNull).toArray();
             if (filteredNodes.length == 1) {
                 TrieNode[] nodes = node.getNext();
                 for (int i = 0; i < nodes.length; i++) {
@@ -68,9 +70,12 @@ public final  class TrieNode {
             if (nodes[i] != null && nodes[i].containsOneWord()) {
                 suffixes.add((char) i + nodes[i].getSuffixSingle());
             } else if (nodes[i] != null && !(nodes[i].containsOneWord())) {
-                ArrayList<String> intermediateSuffixes = nodes[i].getSuffixMany();
+                ArrayList<String> intermediateSuffixes = nodes[i]
+                        .getSuffixMany();
                 int finalI = i;
-                List<String> fixedIntermediateSuffixes = intermediateSuffixes.stream().map(s -> (char) finalI + s).collect(Collectors.toList());
+                List<String> fixedIntermediateSuffixes = intermediateSuffixes.stream()
+                        .map(s -> (char) finalI + s)
+                        .collect(Collectors.toList());
                 suffixes.addAll(fixedIntermediateSuffixes);
             }
         }

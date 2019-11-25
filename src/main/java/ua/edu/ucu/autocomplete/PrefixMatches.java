@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
+
 
 
 public class PrefixMatches {
@@ -24,7 +24,8 @@ public class PrefixMatches {
         int added = 0;
         for (String string : strings) {
             String[] wordsTokens = string.split(" ");
-            List<String> cleanedWords = Arrays.stream(wordsTokens).filter(s -> s.length() > 2)
+            List<String> cleanedWords = Arrays.stream(wordsTokens)
+                    .filter(s -> s.length() > 2)
                     .map(String::toLowerCase).collect(Collectors.toList());
             added += cleanedWords.size();
             for (String term : cleanedWords) {
@@ -50,7 +51,8 @@ public class PrefixMatches {
         Iterable<String> wordPref = dictTrie.wordsWithPrefix(pref);
         ArrayList<String> wordArray = new ArrayList<>();
         wordPref.forEach(wordArray::add);
-        Map<Integer, List<String>> map = wordArray.stream().collect(groupingBy(String::length));
+        Map<Integer, List<String>> map = wordArray.stream()
+                .collect(Collectors.groupingBy(String::length));
         ArrayList<String> result = new ArrayList<String>();
         Object[] keys = map.keySet().toArray();
         int currentK = 0;
