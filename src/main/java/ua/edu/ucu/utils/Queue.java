@@ -4,9 +4,11 @@ import ua.edu.ucu.utils.immutable.ImmutableLinkedList;
 
 public class Queue {
     private ImmutableLinkedList list;
+
     public Queue() {
         list = new ImmutableLinkedList();
     }
+
     public Object peek() {
         return list.getFirst();
     }
@@ -20,7 +22,8 @@ public class Queue {
     public void enqueue(Object e) {
         list = list.addLast(e);
     }
-    public int size(){
+
+    public int size() {
         return list.size();
     }
 
