@@ -45,16 +45,18 @@ public class PrefixMatches {
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        ArrayList<String> wordPref = (ArrayList<String>) dictTrie.wordsWithPrefix(pref);
-        Map<Integer, List<String>> map = wordPref.stream().collect(groupingBy(String::length));
+        Iterable<String> wordPref = dictTrie.wordsWithPrefix(pref);
+        ArrayList<String> wordArray = new ArrayList<>();
+        wordPref.forEach(wordArray::add);
+        Map<Integer, List<String>> map = wordArray.stream().collect(groupingBy(String::length));
         ArrayList<String> result = new ArrayList<String>();
-        Set<Integer> keys = map.keySet();
+        Object[] keys = map.keySet().toArray();
         int currentK = 0;
-        for (int i = 0; i < keys.size(); i++) {
-            List<String> neededWords = map.get(i);
+        for (int i = 0; i < keys.length; i++) {
+            List<String> neededWords = map.get(keys[i]);
             result.addAll(neededWords);
-            k++;
-            if(currentK ==k){
+            currentK++;
+            if (currentK == k) {
                 break;
             }
         }

@@ -121,9 +121,8 @@ public class RWayTrie implements Trie {
                     }
                 }
             }
-
         }
-        return result;
+        return  new TrieIterator(result);
     }
 
 
