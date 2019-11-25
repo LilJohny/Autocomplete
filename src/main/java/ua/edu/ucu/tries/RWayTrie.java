@@ -9,6 +9,7 @@ import java.util.stream.StreamSupport;
 
 
 public class RWayTrie implements Trie {
+    private static final int ENDLINE = 10;
     private TrieNode root;
     private int wordsAmount;
 
@@ -19,8 +20,8 @@ public class RWayTrie implements Trie {
 
     @Override
     public void add(Tuple tuple) {
-        tuple = new Tuple(tuple.term + "\n", tuple.weight + 1);
-        root = insert(root, tuple, 0);
+        Tuple escapedTuple = new Tuple(tuple.term + "\n", tuple.weight + 1);
+        root = insert(root, escapedTuple, 0);
         wordsAmount += 1;
     }
 
@@ -40,8 +41,8 @@ public class RWayTrie implements Trie {
 
     @Override
     public boolean contains(String word) {
-        word += "\n";
-        TrieNode start = search(root, word, 0);
+        String escapedWord = word+"\n";
+        TrieNode start = search(root, escapedWord, 0);
         return start != null && start.getValue();
     }
 
@@ -59,14 +60,15 @@ public class RWayTrie implements Trie {
     @Override
     public boolean delete(String word) {
         if (contains(word)) {
-            word += "\n";
+            //word += "\n";
+            String escapedWord = word+"\n";
             TrieNode[] nodes = root.getNext();
             int i = 0;
-            while (!nodes[word.charAt(i)].containsOneWord()) {
-                nodes = nodes[word.charAt(i)].getNext();
+            while (!nodes[escapedWord.charAt(i)].containsOneWord()) {
+                nodes = nodes[escapedWord.charAt(i)].getNext();
                 i++;
             }
-            nodes[word.charAt(i)] = null;
+            nodes[escapedWord.charAt(i)] = null;
             wordsAmount -= 1;
             return true;
         } else {
@@ -89,7 +91,8 @@ public class RWayTrie implements Trie {
             Object currentIndex = queue.dequeue();
             if (currentIndex instanceof String) {
                 stringCurrentIndex = (String) currentIndex;
-                currentIndex = stringCurrentIndex.charAt(stringCurrentIndex.length() - 1);
+                currentIndex = stringCurrentIndex
+                        .charAt(stringCurrentIndex.length() - 1);
                 TrieNode[] rootNodes = root.getNext();
                 nodes = rootNodes;
                 for (int i = 0; i < stringCurrentIndex.length() - 1; i++) {
@@ -108,10 +111,12 @@ public class RWayTrie implements Trie {
             for (int i = 0; i < currentNodes.length; i++) {
                 if (currentNodes[i] != null) {
                     if (stringCurrentIndex.equals("")) {
-                        queue.enqueue((String.valueOf((char) index) + (String.valueOf((char) i))));
+                        String seq = (String.valueOf((char) index) + (String.valueOf((char) i)));
+                        queue.enqueue(seq);
                     } else {
-                        queue.enqueue(stringCurrentIndex + (String.valueOf((char) i)));
-                        if (i == 10) {
+                        String seq = stringCurrentIndex + (String.valueOf((char) i));
+                        queue.enqueue(seq);
+                        if (i == ENDLINE) {
                             result.add(stringCurrentIndex);
                         }
                     }
