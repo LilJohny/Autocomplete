@@ -111,7 +111,7 @@ public class RWayTrie implements Trie {
             }
             for (int i = 0; i < currentNodes.length; i++) {
                 if (currentNodes[i] != null) {
-                    if (stringCurrentIndex == "") {
+                    if (stringCurrentIndex.equals("")) {
                         queue.enqueue((String.valueOf((char) index) + (String.valueOf((char) i))));
                     } else {
                         queue.enqueue(stringCurrentIndex + (String.valueOf((char) i)));
