@@ -68,7 +68,6 @@ public class RWayTrie implements Trie {
             while (!nodes[word.charAt(i)].containsOneWord()) {
                 nodes = nodes[word.charAt(i)].getNext();
                 i++;
-                boolean fl = nodes[word.charAt(i)].containsOneWord();
             }
             nodes[word.charAt(i)] = null;
             wordsAmount -= 1;
