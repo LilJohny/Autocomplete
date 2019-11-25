@@ -111,12 +111,12 @@ public class RWayTrie implements Trie {
             for (int i = 0; i < currentNodes.length; i++) {
                 if (currentNodes[i] != null) {
                     if (stringCurrentIndex.equals("")) {
-                        String seq = (String.valueOf((char) index) +
-                                (String.valueOf((char) i)));
+                        String seq = (String.valueOf((char) index)
+                                + (String.valueOf((char) i)));
                         queue.enqueue(seq);
                     } else {
-                        String seq = stringCurrentIndex +
-                                (String.valueOf((char) i));
+                        String seq = stringCurrentIndex
+                                + (String.valueOf((char) i));
                         queue.enqueue(seq);
                         if (i == ENDLINE) {
                             result.add(stringCurrentIndex);
@@ -132,7 +132,8 @@ public class RWayTrie implements Trie {
     @Override
     public Iterable<String> wordsWithPrefix(String s) {
         Iterable<String> wordsIterator = words();
-        String[] prefixWords = StreamSupport.stream(wordsIterator.spliterator(), false)
+        String[] prefixWords = StreamSupport
+                .stream(wordsIterator.spliterator(), false)
                 .filter(word -> word.startsWith(s)).toArray(String[]::new);
         return (Iterable<String>) Arrays.asList(prefixWords);
     }
