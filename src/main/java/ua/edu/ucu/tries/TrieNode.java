@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public final class TrieNode {
     private TrieNode[] next = new TrieNode[R];
     private boolean flag;
-    private final static int R = 123;
+    private static final int R = 123;
 
     public TrieNode() {
     }
