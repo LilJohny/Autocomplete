@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final  class TrieNode {
-    private final static int R = 123;
+public final class TrieNode {
     private TrieNode[] next = new TrieNode[R];
-
-    private boolean value;
+    private boolean flag;
+    private final static int R = 123;
 
     public TrieNode() {
     }
@@ -19,12 +18,12 @@ public final  class TrieNode {
         return next;
     }
 
-    public boolean getValue() {
-        return value;
+    public boolean getFlag() {
+        return flag;
     }
 
-    public void setValue(boolean value) {
-        this.value = value;
+    public void setFlag(boolean value) {
+        flag = value;
     }
 
     public boolean hasNext() {
@@ -73,7 +72,8 @@ public final  class TrieNode {
                 ArrayList<String> intermediateSuffixes = nodes[i]
                         .getSuffixMany();
                 int finalI = i;
-                List<String> fixedIntermediateSuffixes = intermediateSuffixes.stream()
+                List<String> fixedIntermediateSuffixes = intermediateSuffixes
+                        .stream()
                         .map(s -> (char) finalI + s)
                         .collect(Collectors.toList());
                 suffixes.addAll(fixedIntermediateSuffixes);

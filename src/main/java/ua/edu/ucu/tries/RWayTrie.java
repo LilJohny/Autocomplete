@@ -30,7 +30,7 @@ public class RWayTrie implements Trie {
             node = new TrieNode();
         }
         if (destination == tuple.weight) {
-            node.setValue(true);
+            node.setFlag(true);
             return node;
         }
         char c = tuple.term.charAt(destination);
@@ -43,7 +43,7 @@ public class RWayTrie implements Trie {
     public boolean contains(String word) {
         String escapedWord = word+"\n";
         TrieNode start = search(root, escapedWord, 0);
-        return start != null && start.getValue();
+        return start != null && start.getFlag();
     }
 
     private TrieNode search(TrieNode node, String word, int i) {
@@ -111,10 +111,12 @@ public class RWayTrie implements Trie {
             for (int i = 0; i < currentNodes.length; i++) {
                 if (currentNodes[i] != null) {
                     if (stringCurrentIndex.equals("")) {
-                        String seq = (String.valueOf((char) index) + (String.valueOf((char) i)));
+                        String seq = (String.valueOf((char) index) +
+                                (String.valueOf((char) i)));
                         queue.enqueue(seq);
                     } else {
-                        String seq = stringCurrentIndex + (String.valueOf((char) i));
+                        String seq = stringCurrentIndex +
+                                (String.valueOf((char) i));
                         queue.enqueue(seq);
                         if (i == ENDLINE) {
                             result.add(stringCurrentIndex);
@@ -130,7 +132,8 @@ public class RWayTrie implements Trie {
     @Override
     public Iterable<String> wordsWithPrefix(String s) {
         Iterable<String> wordsIterator = words();
-        String[] prefixWords = StreamSupport.stream(wordsIterator.spliterator(), false).filter(word -> word.startsWith(s)).toArray(String[]::new);
+        String[] prefixWords = StreamSupport.stream(wordsIterator.spliterator(), false)
+                .filter(word -> word.startsWith(s)).toArray(String[]::new);
         return (Iterable<String>) Arrays.asList(prefixWords);
     }
 
