@@ -72,7 +72,7 @@ public class RWayTrieTest {
         trie.add(new Tuple(("tail"), "tail".length()));
         trie.add(new Tuple(("Hitler"), "Hitler".length()));
         Iterable<String> wordsAll = trie.words();
-        String[] expResult = {"hi","hit","tail","hello","Hitler"};
+        String[] expResult = {"hi", "hit", "tail", "hello", "Hitler"};
         assertThat(wordsAll, containsInAnyOrder(expResult));
     }
 
