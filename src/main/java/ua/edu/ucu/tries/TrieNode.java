@@ -4,19 +4,9 @@ import java.util.*;
 
 public final class TrieNode {
     public HashMap<Character, TrieNode> next = new HashMap<>();
-    public char value;
     private boolean endWord;
-    private TrieNode parent;
 
     public TrieNode() {
-    }
-
-    public TrieNode getParent() {
-        return parent;
-    }
-
-    public void setParent(TrieNode parent) {
-        this.parent = parent;
     }
 
 
