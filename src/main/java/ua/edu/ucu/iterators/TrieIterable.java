@@ -72,9 +72,9 @@ class TrieIterator implements java.util.Iterator<String> {
             String queueValue = String.valueOf(queue.dequeue());
             String currentWord = iterPrefix + queueValue;
             TrieNode node;
-            if (iterTrie.contains(currentWord)) {
+
                 node = iterTrie.get(currentWord);
-            } else {
+            if(node == null){
                 node = iterTrie.get(queueValue);
                 currentWord = queueValue;
             }
